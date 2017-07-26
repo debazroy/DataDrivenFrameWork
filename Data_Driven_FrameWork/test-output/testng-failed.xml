@@ -5,9 +5,7 @@
     <classes>
       <class name="DDT.Amazon_Login">
         <methods>
-          <include name="login_Amazon" invocation-numbers="0 1 2"/>
-          <include name="Before"/>
-          <include name="afterTest"/>
+          <include name="login_Amazon" invocation-numbers="1"/>
         </methods>
       </class> <!-- DDT.Amazon_Login -->
     </classes>

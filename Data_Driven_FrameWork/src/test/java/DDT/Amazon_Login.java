@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -21,20 +22,17 @@ public class Amazon_Login {
 	public void login_Amazon (String username, String password) {
 		ChromeDriverManager.getInstance().setup();
 		WebDriver driver = new ChromeDriver();
-		Log.info("Browser Open");
 		driver.get("https://www.amazon.com/");
-		Log.info("Navigate to Application");
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		driver.findElement(By.id("nav-link-accountList")).click();
 		driver.findElement(By.id("ap_email")).sendKeys(username);
-		Log.info("UserName Entered");
 		driver.findElement(By.id("ap_password")).sendKeys(password);
-		Log.info("Password Entered");
 		driver.findElement(By.id("signInSubmit")).click();
+		Assert.assertFalse(driver.getTitle().contains("Amazon Sign In"),"User CAN'T Login with INVALID CREDENTIALS");
+		System.out.println("User able to Login with VALID CREDENTIAL");
 		driver.quit();
-		Log.info("Browser Quit");
 	}
 
 /*	@DataProvider (name = "TestData")
@@ -52,12 +50,13 @@ public class Amazon_Login {
 
 	@DataProvider (name = "TestData")
 	public Object[][] passData() {
-		ExcelDataConfig config = new ExcelDataConfig("C:\\EclipseJava\\javaworkspace\\Data_Driven_FrameWork\\src\\test\\java\\DDT_testData\\TestData.xlsx");
+		ExcelDataConfig config = new ExcelDataConfig("C:\\Users\\debar\\git\\DataDrivenFW\\Data_Driven_FrameWork\\src\\test\\java\\DDT_testData\\TestData.xlsx");
 		int rows = config.getRowCount(0);
 		Object[][] data = new Object[rows][2];
 		for (int i=0; i<rows; i++) {
 			data[i][0] = config.getData(0, i, 0);
 			data[i][1] = config.getData(0, i, 1);
+			
 		}
 		return data;
 	}
